@@ -13,9 +13,6 @@ final class MainViewController: UIViewController {
     private var subscriptions = Set<AnyCancellable>()
     @Injected private var store: AppStore
     
-    private var authVC: WelcomeViewController?
-    private var profileVC: ProfileViewController?
-    
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,11 +43,6 @@ final class MainViewController: UIViewController {
     private func presentLogIn(_ state: OnboardingState) {
         guard !children.contains(where: { $0 is WelcomeViewController }) else { return }
         
-        if profileVC != nil {
-            removeChild(profileVC)
-            profileVC = nil
-        }
-        
         let onboardingStatePublisher = store.$state
             .removeDuplicates()
             .map { state -> ScopedState<OnboardingState> in
@@ -63,17 +55,12 @@ final class MainViewController: UIViewController {
             }
             .eraseToAnyPublisher()
         
-        authVC = WelcomeViewController(statePublisher: onboardingStatePublisher)
-        presentFullScreen(authVC!)
+        let authVC = WelcomeViewController(statePublisher: onboardingStatePublisher)
+        presentFullScreen(authVC)
     }
     
     private func presentProfile(state: LoggedInState) {
         guard !children.contains(where: { $0 is ProfileViewController }) else { return }
-        
-        if authVC != nil {
-            removeChild(authVC)
-            authVC = nil
-        }
         
         let statePublisher = store.$state
             .removeDuplicates()
@@ -87,27 +74,10 @@ final class MainViewController: UIViewController {
             }
             .eraseToAnyPublisher()
         
-        profileVC = ProfileViewController(statePublisher: statePublisher)
-        presentFullScreen(profileVC!)
+        let profileVC = ProfileViewController(statePublisher: statePublisher)
+        presentFullScreen(profileVC)
     }
     
-    private func presentFullScreen(_ child: UIViewController) {
-        guard child.parent == nil else { return }
-        
-        addChild(child)
-        view.addSubview(child.view)
-        child.view.frame = view.frame
-        
-        child.didMove(toParent: self)
-    }
     
-    private func removeChild(_ child: UIViewController?) {
-        guard let child = child else { return }
-        guard child.parent != nil else { return }
-        
-        child.willMove(toParent: nil)
-        child.view.removeFromSuperview()
-        child.removeFromParent()
-    }
 }
 

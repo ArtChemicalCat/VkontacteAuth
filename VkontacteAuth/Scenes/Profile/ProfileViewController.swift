@@ -90,6 +90,10 @@ final class ProfileViewController: UIViewController {
         store.dispatch(.requestProfileInfo)
     }
     
+    deinit {
+        print(#function)
+    }
+    
     //MARK: - Metods
     private func observeState() {
         statePublisher
@@ -97,6 +101,8 @@ final class ProfileViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 switch state {
+                case .outOfScope:
+                    self?.parent?.removeChild(self)
                 case .inScope(let loggedInState):
                     loggedInState.isLoading ? self?.loadingIndicator.startAnimating() : self?.loadingIndicator.stopAnimating()
                     
@@ -106,8 +112,6 @@ final class ProfileViewController: UIViewController {
                     self?.profileImage.load(url: imageURL)
                     self?.nameLabel.text = user.fullName
                     self?.cityLabel.text = user.city
-                default:
-                    return
                 }
             }
             .store(in: &subscriptions)

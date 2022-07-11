@@ -48,6 +48,11 @@ final class WelcomeViewController: UIViewController {
         presentedViewController?.dismiss(animated: false)
     }
     
+    deinit {
+        print(#function)
+    }
+    
+    //MARK: - Metods
     private func observeState() {
         statePublisher
             .removeDuplicates()
@@ -56,7 +61,7 @@ final class WelcomeViewController: UIViewController {
                 
                 switch state {
                 case .outOfScope:
-                    return
+                    self?.parent?.removeChild(self)
                 case .inScope(let onboardingState):
                     switch onboardingState {
                     case .authenticationScreen:

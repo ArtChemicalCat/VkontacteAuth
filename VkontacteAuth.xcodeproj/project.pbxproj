@@ -20,6 +20,7 @@
 		2417B7D7287735FE002A6080 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2417B7D6287735FE002A6080 /* APIResponse.swift */; };
 		2417B7DA287C0DA1002A6080 /* SessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2417B7D9287C0DA1002A6080 /* SessionRepository.swift */; };
 		2417B7DD287C4925002A6080 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2417B7DC287C4925002A6080 /* DIContainer.swift */; };
+		2417B7DF287C6456002A6080 /* UIViewContoller+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2417B7DE287C6456002A6080 /* UIViewContoller+Extension.swift */; };
 		245E7EBA28756D830097020F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245E7EB928756D830097020F /* AppDelegate.swift */; };
 		245E7EC328756D850097020F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 245E7EC228756D850097020F /* Assets.xcassets */; };
 		245E7EC628756D850097020F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 245E7EC428756D850097020F /* LaunchScreen.storyboard */; };
@@ -50,6 +51,7 @@
 		2417B7D6287735FE002A6080 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		2417B7D9287C0DA1002A6080 /* SessionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRepository.swift; sourceTree = "<group>"; };
 		2417B7DC287C4925002A6080 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
+		2417B7DE287C6456002A6080 /* UIViewContoller+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewContoller+Extension.swift"; sourceTree = "<group>"; };
 		245E7EB628756D830097020F /* VkontacteAuth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VkontacteAuth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		245E7EB928756D830097020F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		245E7EC228756D850097020F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 			children = (
 				245E7EDA287572CD0097020F /* String+Error.swift */,
 				245E7EE9287578760097020F /* AppUserDefaultsKeys.swift */,
+				2417B7DE287C6456002A6080 /* UIViewContoller+Extension.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 				245E7EF3287580760097020F /* WelcomeViewController.swift in Sources */,
 				245E7EEA287578760097020F /* AppUserDefaultsKeys.swift in Sources */,
 				2417B7C72876D274002A6080 /* ProfileViewController.swift in Sources */,
+				2417B7DF287C6456002A6080 /* UIViewContoller+Extension.swift in Sources */,
 				245E7EBA28756D830097020F /* AppDelegate.swift in Sources */,
 				245E7EE1287574220097020F /* APIManager.swift in Sources */,
 				2417B7DD287C4925002A6080 /* DIContainer.swift in Sources */,

@@ -51,7 +51,6 @@ enum OnboardingState: Equatable {
 }
 
 struct LoggedInState: Equatable, CustomStringConvertible {
-    
     let userSession: UserSession
     var isLoading: Bool = false
     var user: User?
