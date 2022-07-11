@@ -11,21 +11,12 @@ import Combine
 final class MainViewController: UIViewController {
     //MARK: - Properties
     private var subscriptions = Set<AnyCancellable>()
-    private let store: Store<AppState, AppActions>
+    @Injected private var store: AppStore
     
-    private var authVC: AuthViewController?
+    private var authVC: WelcomeViewController?
     private var profileVC: ProfileViewController?
     
     //MARK: - LifeCycle
-    init(store: Store<AppState, AppActions>) {
-        self.store = store
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBlue
@@ -53,7 +44,7 @@ final class MainViewController: UIViewController {
     }
     
     private func presentLogIn(_ state: OnboardingState) {
-        guard !children.contains(where: { $0 is AuthViewController }) else { return }
+        guard !children.contains(where: { $0 is WelcomeViewController }) else { return }
         
         if profileVC != nil {
             removeChild(profileVC)
@@ -72,8 +63,7 @@ final class MainViewController: UIViewController {
             }
             .eraseToAnyPublisher()
         
-        let userInteractions = ReduxAuthUserInteractions(store: store, sessionRepository: UserSessionRepository())
-        authVC = AuthViewController(statePublisher: onboardingStatePublisher, userInteractions: userInteractions)
+        authVC = WelcomeViewController(statePublisher: onboardingStatePublisher)
         presentFullScreen(authVC!)
     }
     
@@ -85,7 +75,6 @@ final class MainViewController: UIViewController {
             authVC = nil
         }
         
-        let userInteractions = ReduxProfileUserInteractions(store: store)
         let statePublisher = store.$state
             .removeDuplicates()
             .map { state -> ScopedState<LoggedInState> in
@@ -98,7 +87,7 @@ final class MainViewController: UIViewController {
             }
             .eraseToAnyPublisher()
         
-        profileVC = ProfileViewController(interactions: userInteractions, statePublisher: statePublisher)
+        profileVC = ProfileViewController(statePublisher: statePublisher)
         presentFullScreen(profileVC!)
     }
     

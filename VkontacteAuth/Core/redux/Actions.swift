@@ -7,7 +7,12 @@
 
 import Foundation
 
-enum AppActions: CustomStringConvertible {
+protocol ActionDispatcher {
+    associatedtype Action
+    func dispatch(_ action: Action)
+}
+
+enum AppActions: CustomStringConvertible, Equatable {
     case logIn
     case authenticationFinished(UserSession)
     case authViewDismissed

@@ -45,3 +45,5 @@ class Store<State, Action> {
         state = newState
     }
 }
+
+extension Store: ActionDispatcher {}

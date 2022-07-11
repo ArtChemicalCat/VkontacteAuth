@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ProfileInfoRequest: RequestProtocol {
+struct ProfileInfoRequest: RequestProtocol {
     let path: String = "/method/users.get"
     let host: String = "api.vk.com"
     let requestType: RequestType = .GET

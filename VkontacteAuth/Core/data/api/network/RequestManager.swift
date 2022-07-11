@@ -15,12 +15,10 @@ protocol RequestManagerProtocol {
 
 final class RequestManager: RequestManagerProtocol {
     let apiManager: APIManagerProtocol
-    let userSessionRepository: UserSessionRepository
+    @Injected var userSessionRepository: UserSessionRepository
     
-    init(apiManager: APIManagerProtocol = APIManager(),
-         userSessionRepository: UserSessionRepository = UserSessionRepository()) {
+    init(apiManager: APIManagerProtocol = APIManager()) {
         self.apiManager = apiManager
-        self.userSessionRepository = userSessionRepository
     }
     
     

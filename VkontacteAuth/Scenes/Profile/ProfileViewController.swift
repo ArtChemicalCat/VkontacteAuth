@@ -61,20 +61,20 @@ final class ProfileViewController: UIViewController {
         var config = UIButton.Configuration.bordered()
         config.title = "Log Out"
         let button = UIButton(configuration: config, primaryAction: UIAction(handler: { [unowned self] _ in
-            userInteractions.logOut()
+            store.dispatch(.logOut)
         }))
         
         return button
     }()
     
     //MARK: - Properties
-    private let userInteractions: ProfileUserInteractions
     private let statePublisher: AnyPublisher<ScopedState<LoggedInState>, Never>
     private var subscriptions = Set<AnyCancellable>()
+
+    @Injected private var store: AppStore
     
     //MARK: - LifeCycle
-    init(interactions: ProfileUserInteractions, statePublisher: AnyPublisher<ScopedState<LoggedInState>, Never>) {
-        self.userInteractions = interactions
+    init(statePublisher: AnyPublisher<ScopedState<LoggedInState>, Never>) {
         self.statePublisher = statePublisher
         super.init(nibName: nil, bundle: nil)
     }
@@ -87,7 +87,7 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         layout()
         observeState()
-        userInteractions.requestUserInfo()
+        store.dispatch(.requestProfileInfo)
     }
     
     //MARK: - Metods

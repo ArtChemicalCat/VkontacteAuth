@@ -10,14 +10,22 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    let userSessionRepository = UserSessionRepository()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let userSession = UserSessionRepository().readUserSession()
-        let initialAppState = AppState(from: userSession)
-        let store = AppStore(initial: initialAppState, reducer: Reducers.authReducer, middlewares: [Middlewares.loggerMiddleware])
+        let container = DIContainer.shared
+        container.register(type: UserSessionRepository.self,
+                           component: UserSessionRepository())
+        container.register(type: RequestManager.self,
+                           component: RequestManager())
         
-        let mainVC = UINavigationController(rootViewController: MainViewController(store: store))
+        let userSession = container.resolve(type: UserSessionRepository.self).readUserSession()
+        let initialAppState = AppState(from: userSession)
+        let store = AppStore(initial: initialAppState, reducer: Reducers.authReducer, middlewares: [Middlewares.loggerMiddleware,
+                                                                                                    Middlewares.getProfileInfoMiddleware,
+                                                                                                    Middlewares.userSessionManagingMiddleware])
+        
+        container.register(type: AppStore.self, component: store)
+        let mainVC = UINavigationController(rootViewController: MainViewController())
         
         let window = UIWindow()
         window.frame = UIScreen.main.bounds
